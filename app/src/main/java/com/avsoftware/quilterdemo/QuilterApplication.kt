@@ -10,7 +10,8 @@ class QuilterApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // hide this in Production
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
