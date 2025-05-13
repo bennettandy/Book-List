@@ -1,4 +1,4 @@
-package com.avsoftware.quilterdemo.ui.theme
+package com.avsoftware.quilterdemo.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

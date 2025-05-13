@@ -12,12 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.avsoftware.quilterdemo.data.OpenLibraryBookRepository
-import com.avsoftware.quilterdemo.ui.theme.BookScreen
-import com.avsoftware.quilterdemo.ui.theme.BookViewModel
+import com.avsoftware.quilterdemo.ui.BookScreen
+import com.avsoftware.quilterdemo.ui.BookViewModel
 import com.avsoftware.quilterdemo.ui.theme.QuilterDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

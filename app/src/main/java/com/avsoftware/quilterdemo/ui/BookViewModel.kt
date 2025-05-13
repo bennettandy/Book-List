@@ -1,8 +1,10 @@
-package com.avsoftware.quilterdemo.ui.theme
+package com.avsoftware.quilterdemo.ui
 
 import androidx.lifecycle.ViewModel
 import com.avsoftware.quilterdemo.domain.model.Book
-import com.avsoftware.quilterdemo.domain.repository.BookRepository
+import com.avsoftware.quilterdemo.domain.usecase.GetAlreadyReadUseCase
+import com.avsoftware.quilterdemo.domain.usecase.GetCurrentlyReadingUseCase
+import com.avsoftware.quilterdemo.domain.usecase.GetWantToReadBooksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,7 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookViewModel @Inject constructor(
-    private val bookRepository: BookRepository
+    private val getWantToReadBooksUseCase: GetWantToReadBooksUseCase,
+    private val getCurrentlyReadingUseCase: GetCurrentlyReadingUseCase,
+    private val getAlreadyReadUseCase: GetAlreadyReadUseCase
 ) : ViewModel() {
 
     private val _wantToReadBooks = MutableStateFlow<List<Book>>(emptyList())
@@ -34,7 +38,7 @@ class BookViewModel @Inject constructor(
 
     fun loadWantToReadBooks() {
         _isLoading.value = true
-        bookRepository.getWantToReadList()
+        getWantToReadBooksUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
