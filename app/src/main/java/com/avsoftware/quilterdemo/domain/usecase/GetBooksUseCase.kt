@@ -15,19 +15,27 @@ class GetBooksUseCase @Inject constructor(private val bookRepository: BookReposi
             { wantToRead, currentlyReading, alreadyRead ->
                 wantToRead + currentlyReading + alreadyRead
             }
-        ).map { books ->
-            books.sortedBy { it.id }
-        }.doOnSuccess {
-            Timber.d("Got ${it.size} Books")
-            // show first few books to check structure
-            it.take(6).forEach {
-                Timber.d("-- Book $it")
+        )
+            .map {
+                // remove any empty items
+                it.filter { !it.title.isNullOrEmpty() }
             }
-            Timber.d("Got ${it.size} Books")
-        }.doOnSuccess {
-            Timber.d("Attempting to Load Books")
-        }.doOnError {
-            Timber.w("Failed to Load books ${it.message}")
-        }
+            .map { books ->
+                books.sortedBy { it.id }
+            }
+            .doOnSuccess {
+                Timber.d("Got ${it.size} Books")
+                // show first few books to check structure
+                it.take(6).forEach {
+                    Timber.d("-- Book $it")
+                }
+                Timber.d("Got ${it.size} Books")
+            }
+            .doOnSuccess {
+                Timber.d("Attempting to Load Books")
+            }
+            .doOnError {
+                Timber.w("Failed to Load books ${it.message}")
+            }
     }
 }

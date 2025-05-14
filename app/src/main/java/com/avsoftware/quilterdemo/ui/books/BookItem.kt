@@ -1,4 +1,4 @@
-package com.avsoftware.quilterdemo.ui
+package com.avsoftware.quilterdemo.ui.books
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -15,9 +15,9 @@ import coil.request.ImageRequest
 import com.avsoftware.quilterdemo.domain.model.Book
 
 @Composable
-fun BookItem(book: Book) {
+fun BookItem(book: Book, modifier: Modifier) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),

@@ -1,5 +1,7 @@
 package com.avsoftware.quilterdemo.ui
 
+import android.util.MutableBoolean
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.avsoftware.quilterdemo.domain.model.Book
 import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
@@ -21,6 +23,9 @@ class BookViewModel @Inject constructor(
     private val _booksList = MutableStateFlow<BookState>(BookState.Loading)
     val booksList: StateFlow<BookState> = _booksList.asStateFlow()
 
+    private val _showBottomSheet = MutableStateFlow(false)
+    val showBottomSheet: StateFlow<Boolean> = _showBottomSheet.asStateFlow()
+
     private val disposeBag = CompositeDisposable()
 
     init {
@@ -29,12 +34,21 @@ class BookViewModel @Inject constructor(
     }
 
     fun loadBooks() {
+        _booksList.value = BookState.Loading
         _booksList.subscribeSingle(
             single = getBooksUseCase(),
             disposeBag = disposeBag,
             onSuccess = { _, books -> BookState.Success(books.sortedBy { it.title }) },
             onError = { _, throwable -> BookState.Error(throwable.message ?: "Failed to load books") }
         )
+    }
+
+    fun showBottomSheet() {
+        _showBottomSheet.value = true
+    }
+
+    fun hideBottomSheet() {
+        _showBottomSheet.value = false
     }
 
     // This really simplifies state update, extension function on the MutableStateFlow
