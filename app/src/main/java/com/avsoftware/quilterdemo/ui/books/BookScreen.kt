@@ -32,8 +32,8 @@ fun BookScreen(
             is BookState.Success -> {
                 LazyColumn {
                     itemsIndexed(bookList.books) { index, book ->
-                        //key { book.id }
-                        BookItem(book = book, modifier = Modifier.clickable(
+                        BookItem(
+                            book = book, modifier = Modifier.clickable(
                             onClick = { bookClicked(book) }
                         ))
                     }

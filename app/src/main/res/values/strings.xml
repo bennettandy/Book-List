@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">QuilterDemo</string>
+    <string name="app_name">Book List Demo</string>
+    <string name="by_author">by %1$s</string>
+    <string name="cover_of">Cover of %1$s</string>
+    <string name="no_cover_available">No cover available</string>
+    <string name="done_button">Done</string>
 </resources>

@@ -9,12 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.avsoftware.quilterdemo.domain.model.Book
+import com.avsoftware.quilterdemo.R
 
 @Composable
 fun BookItem(book: Book, modifier: Modifier) {
@@ -40,7 +42,7 @@ fun BookItem(book: Book, modifier: Modifier) {
                         .placeholder(android.R.drawable.progress_indeterminate_horizontal) // Loading
                         .error(android.R.drawable.ic_menu_gallery) // Error
                         .build(),
-                    contentDescription = "Cover of ${book.title}",
+                    contentDescription = stringResource(id = R.string.cover_of, book.title.orEmpty()),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(width = 60.dp, height = 90.dp)
@@ -50,8 +52,8 @@ fun BookItem(book: Book, modifier: Modifier) {
                 modifier = Modifier
                     .size(width = 60.dp, height = 90.dp)
                     .padding(end = 16.dp),
-                painter = painterResource(com.avsoftware.quilterdemo.R.drawable.blank_book),
-                contentDescription = "No cover available"
+                painter = painterResource(R.drawable.blank_book),
+                contentDescription = stringResource(R.string.no_cover_available)
             )
 
             // Title and Author
@@ -68,7 +70,7 @@ fun BookItem(book: Book, modifier: Modifier) {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "by ${book.author}",
+                    text = stringResource(id = R.string.by_author, book.author),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,

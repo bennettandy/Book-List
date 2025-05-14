@@ -7,11 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.avsoftware.quilterdemo.R
 import com.avsoftware.quilterdemo.domain.model.Book
 
 @Composable
@@ -43,24 +45,24 @@ fun DetailsBottomSheet(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(url)
                     .crossfade(true)
-                    .placeholder(android.R.drawable.progress_indeterminate_horizontal) // Loading
-                    .error(android.R.drawable.ic_menu_gallery) // Error
+                    .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+                    .error(android.R.drawable.ic_menu_gallery)
                     .build(),
-                contentDescription = "Cover of ${book.title}",
+                contentDescription = stringResource(id = R.string.cover_of, book.title.orEmpty()),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .size(width = 200.dp, height = 300.dp) // Large cover size
+                    .size(width = 200.dp, height = 300.dp)
                     .padding(vertical = 8.dp)
             )
         } ?: Text(
-            text = "No cover available",
+            text = stringResource(R.string.no_cover_available),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         // Author
         Text(
-            text = "by ${book.author}",
+            text = stringResource(id = R.string.by_author, book.author),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
@@ -72,7 +74,7 @@ fun DetailsBottomSheet(
             onClick = onDoneClicked,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Done")
+            Text(text = stringResource(R.string.done_button))
         }
     }
 }
