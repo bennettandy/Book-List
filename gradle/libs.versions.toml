@@ -11,9 +11,12 @@ lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 lifecycleViewmodelCompose = "2.9.0"
-loggingInterceptor = "3.9.1"
+loggingInterceptor = "4.12.0"
 navigationCompose = "2.9.0"
 timber = "5.0.1"
+
+## C
+coil = "2.7.0"
 converterGson = "2.9.0"
 
 ## H
@@ -24,6 +27,9 @@ kotlin-parcelize = "2.0.0" # aligns with Kotlin version
 ksp = "2.1.20-1.0.31" # aligns with Kotlin version
 kover = "0.9.1"
 kotlinxCoroutinesAndroid = "1.8.1"
+
+## O
+okhttp = "4.12.0"
 
 ## R
 retrofit = "2.11.0"
@@ -51,6 +57,9 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
+## C
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
 ## H
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
@@ -58,12 +67,14 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 ## K
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 
+## O
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+
 ## R
 rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-
 
 
 

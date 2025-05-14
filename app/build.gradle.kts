@@ -74,11 +74,17 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Coil for cover images
+    implementation(libs.coil.compose)
+
     // Rx
     implementation (libs.rxjava)
     implementation (libs.adapter.rxjava2)
     implementation (libs.rxandroid)
     implementation (libs.logging.interceptor)
+
+    // okHttp
+    implementation (libs.okhttp)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
