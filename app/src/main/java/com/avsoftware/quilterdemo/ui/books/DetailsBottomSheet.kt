@@ -38,7 +38,7 @@ fun DetailsBottomSheet(
         )
 
         // Large Cover Image
-        book.getCoverUrl(Book.CoverSize.MEDIUM)?.let { url ->
+        book.getCoverUrl(CoverSize.MEDIUM)?.let { url ->
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(url)
