@@ -1,5 +1,5 @@
-# QuilterDemo
-QuilterDemo is an Android application that allows users to browse books from the Open Library API.
+# Book list Demo
+BookListDemo is an Android application that allows users to browse books from the Open Library API.
 
 ## Screenshots
 ![](screenshots/details_view.png)
@@ -11,7 +11,7 @@ QuilterDemo is an Android application that allows users to browse books from the
    cd quilterdemo
    ```
 
-2**Build and Run**:
+2. **Build and Run**:
    - Select the `debug` build variant.
    - Run the app (`./gradlew assembleDebug` or Run in Android Studio).
    - The app will fetch books from `https://openlibrary.org/` and display them.
@@ -43,12 +43,5 @@ QuilterDemo follows **MVVM** with **MVI-inspired** state management:
 - Full list in `app/libs.versions.toml`
 
 ## Usage
-1. Launch the app to see the book list (“Want to Read”).
-2. Tap a book to view details in a bottom sheet (title, large cover, author).
-3. Use the “Refresh” button in the `Scaffold`’s bottom bar to reload books.
-4. Swipe down or tap “Cancel” to dismiss the bottom sheet.
-
-## Acknowledgments
-- Open Library API for book data.
-- Jetpack Compose for modern Android UI.
-- Coil for efficient image loading.
+1. Launch the app to see the book list.
+2. Tap a book to view details in a bottom sheet.
