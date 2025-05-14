@@ -66,7 +66,7 @@ class BookViewModel @Inject constructor(
         crossinline onError: (S, Throwable) -> S
     ) {
         single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            //.observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 // set the Success State
                 { result -> this.value = onSuccess(this.value, result) },

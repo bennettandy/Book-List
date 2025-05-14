@@ -1,7 +1,9 @@
 package com.avsoftware.quilterdemo.di
 
 import com.avsoftware.quilterdemo.data.OpenLibraryBookRepository
+import com.avsoftware.quilterdemo.data.api.GetBooksUseCaseImpl
 import com.avsoftware.quilterdemo.domain.repository.BookRepository
+import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,8 @@ interface DomainModule {
     @Binds
     @Singleton
     fun provideBookRepository(bookRepository: OpenLibraryBookRepository): BookRepository
+
+    @Binds
+    @Singleton
+    fun provideGetBooksUseCase(getBooksUseCaseImpl: GetBooksUseCaseImpl): GetBooksUseCase
 }
