@@ -2,9 +2,7 @@ package com.avsoftware.quilterdemo.ui
 
 import androidx.lifecycle.ViewModel
 import com.avsoftware.quilterdemo.domain.model.Book
-import com.avsoftware.quilterdemo.domain.usecase.GetAlreadyReadUseCase
-import com.avsoftware.quilterdemo.domain.usecase.GetCurrentlyReadingUseCase
-import com.avsoftware.quilterdemo.domain.usecase.GetWantToReadBooksUseCase
+import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,50 +15,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookViewModel @Inject constructor(
-    private val getWantToReadBooksUseCase: GetWantToReadBooksUseCase,
-    private val getCurrentlyReadingUseCase: GetCurrentlyReadingUseCase,
-    private val getAlreadyReadUseCase: GetAlreadyReadUseCase
+    private val getBooksUseCase: GetBooksUseCase
 ) : ViewModel() {
 
-    private val _wantToRead = MutableStateFlow<BookState>(BookState.Loading)
-    val wantToRead: StateFlow<BookState> = _wantToRead.asStateFlow()
-
-    private val _currentlyReading = MutableStateFlow<BookState>(BookState.Loading)
-    val currentlyReading: StateFlow<BookState> = _currentlyReading.asStateFlow()
-
-    private val _alreadyRead = MutableStateFlow<BookState>(BookState.Loading)
-    val alreadyRead: StateFlow<BookState> = _alreadyRead.asStateFlow()
+    private val _booksList = MutableStateFlow<BookState>(BookState.Loading)
+    val booksList: StateFlow<BookState> = _booksList.asStateFlow()
 
     private val disposeBag = CompositeDisposable()
 
     init {
-        // todo: trigger this from the UI
-        loadWantToReadBooks()
-        loadCurrentlyReading()
-        loadAlreadyRead()
+        // trigger in init for simplicity, we can refactor if needed
+        loadBooks()
     }
 
-    fun loadWantToReadBooks() {
-        _wantToRead.subscribeSingle(
-            single = getWantToReadBooksUseCase(),
-            disposeBag = disposeBag,
-            onSuccess = { _, books -> BookState.Success(books.sortedBy { it.title }) },
-            onError = { _, throwable -> BookState.Error(throwable.message ?: "Failed to load books") }
-        )
-    }
-
-    fun loadCurrentlyReading() {
-        _currentlyReading.subscribeSingle(
-            single = getCurrentlyReadingUseCase(),
-            disposeBag = disposeBag,
-            onSuccess = { _, books -> BookState.Success(books.sortedBy { it.title }) },
-            onError = { _, throwable -> BookState.Error(throwable.message ?: "Failed to load books") }
-        )
-    }
-
-    fun loadAlreadyRead() {
-        _alreadyRead.subscribeSingle(
-            single = getAlreadyReadUseCase(),
+    fun loadBooks() {
+        _booksList.subscribeSingle(
+            single = getBooksUseCase(),
             disposeBag = disposeBag,
             onSuccess = { _, books -> BookState.Success(books.sortedBy { it.title }) },
             onError = { _, throwable -> BookState.Error(throwable.message ?: "Failed to load books") }
@@ -68,6 +38,8 @@ class BookViewModel @Inject constructor(
     }
 
     // This really simplifies state update, extension function on the MutableStateFlow
+    // this made more sense when I initially had 3 separate lists
+    // keeping as it is more concise
     inline fun <T, S> MutableStateFlow<S>.subscribeSingle(
         single: Single<T>,
         disposeBag: CompositeDisposable,
