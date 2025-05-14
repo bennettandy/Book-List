@@ -19,39 +19,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BookScreen(viewModel: BookViewModel, modifier: Modifier){
+fun BookScreen(viewModel: BookViewModel, modifier: Modifier) {
     val bookList = viewModel.booksList.collectAsState().value
 
-        when (bookList) {
-            is BookState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize()){
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-            }
-            is BookState.Success -> {
-                LazyColumn {
-                    itemsIndexed(bookList.books) { index, book ->
-                        //key { book.id }
-                        BookItem(book = book)
-                    }
-                }
-            }
-            is BookState.Error -> {
-                Text(
-                    text = bookList.message,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(16.dp)
-                )
+    when (bookList) {
+        is BookState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
 
-        Button(
-            onClick = { viewModel.loadBooks() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("Refresh")
+        is BookState.Success -> {
+            LazyColumn {
+                itemsIndexed(bookList.books) { index, book ->
+                    //key { book.id }
+                    BookItem(book = book)
+                }
+            }
         }
+
+        is BookState.Error -> {
+            Text(
+                text = bookList.message,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+
+    Button(
+        onClick = { viewModel.loadBooks() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text("Refresh")
+    }
 
 }
