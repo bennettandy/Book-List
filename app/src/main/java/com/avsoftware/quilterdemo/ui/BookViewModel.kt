@@ -26,6 +26,9 @@ class BookViewModel @Inject constructor(
     private val _showBottomSheet = MutableStateFlow(false)
     val showBottomSheet: StateFlow<Boolean> = _showBottomSheet.asStateFlow()
 
+    private val _selectedBook = MutableStateFlow<Book?>(null)
+    val selectedBook: StateFlow<Book?> = _selectedBook.asStateFlow()
+
     private val disposeBag = CompositeDisposable()
 
     init {
@@ -43,11 +46,13 @@ class BookViewModel @Inject constructor(
         )
     }
 
-    fun showBottomSheet() {
+    fun showBottomSheet(book: Book) {
+        _selectedBook.value = book
         _showBottomSheet.value = true
     }
 
     fun hideBottomSheet() {
+        _selectedBook.value = null
         _showBottomSheet.value = false
     }
 

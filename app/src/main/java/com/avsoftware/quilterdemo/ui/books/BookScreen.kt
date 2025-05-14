@@ -13,13 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.avsoftware.quilterdemo.domain.model.Book
 import com.avsoftware.quilterdemo.ui.BookState
 
 @Composable
 fun BookScreen(
     bookList: BookState,
     modifier: Modifier,
-    bookClicked: (Int) -> Unit
+    bookClicked: (Book) -> Unit
 ) {
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -33,7 +34,7 @@ fun BookScreen(
                     itemsIndexed(bookList.books) { index, book ->
                         //key { book.id }
                         BookItem(book = book, modifier = Modifier.clickable(
-                            onClick = { bookClicked(index) }
+                            onClick = { bookClicked(book) }
                         ))
                     }
                 }

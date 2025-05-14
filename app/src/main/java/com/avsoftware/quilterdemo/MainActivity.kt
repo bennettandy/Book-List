@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.avsoftware.quilterdemo.ui.BookState
 import com.avsoftware.quilterdemo.ui.books.BookScreen
 import com.avsoftware.quilterdemo.ui.BookViewModel
+import com.avsoftware.quilterdemo.ui.books.DetailsBottomSheet
 import com.avsoftware.quilterdemo.ui.theme.QuilterDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
 
                 val bookList = viewModel.booksList.collectAsState().value
                 val showBottomSheet = viewModel.showBottomSheet.collectAsState().value
+                val selectedBook = viewModel.selectedBook.collectAsState().value
 
                 val bottomSheetState = rememberModalBottomSheetState()
 
@@ -60,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     BookScreen(
                         bookList = bookList,
                         modifier = Modifier.padding(innerPadding),
-                        bookClicked = { viewModel.showBottomSheet() }
+                        bookClicked = { viewModel.showBottomSheet(it) }
                     )
 
                     // Bottom Sheet
@@ -70,21 +71,10 @@ class MainActivity : ComponentActivity() {
                             sheetState = bottomSheetState,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Column(){
-                                Text("One")
-                                Text("Two")
-                            }
-//                            BottomSheetContent(
-//                                onRefresh = {
-//                                    viewModel.loadBooks()
-//                                    coroutineScope.launch { bottomSheetState.hide() }
-//                                    showBottomSheet = false
-//                                },
-//                                onCancel = {
-//                                    coroutineScope.launch { bottomSheetState.hide() }
-//                                    showBottomSheet = false
-//                                }
-//                            )
+                            DetailsBottomSheet(
+                                book = selectedBook!!,
+                                onDoneClicked = viewModel::hideBottomSheet,
+                            )
                         }
                     }
                 }

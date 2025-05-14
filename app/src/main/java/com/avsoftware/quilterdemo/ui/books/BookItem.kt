@@ -1,5 +1,6 @@
 package com.avsoftware.quilterdemo.ui.books
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -7,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -35,18 +37,22 @@ fun BookItem(book: Book, modifier: Modifier) {
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(url)
                         .crossfade(true)
-//                        .placeholder(R.drawable.loading_placeholder) // Add to res/drawable
-//                        .error(R.drawable.error_placeholder) // Add to res/drawable
+                        .placeholder(android.R.drawable.progress_indeterminate_horizontal) // Loading
+                        .error(android.R.drawable.ic_menu_gallery) // Error
                         .build(),
                     contentDescription = "Cover of ${book.title}",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(width = 60.dp, height = 90.dp) // Standard book cover aspect ratio
+                        .size(width = 60.dp, height = 90.dp)
                         .padding(end = 16.dp)
                 )
-            } ?: Spacer(modifier = Modifier
-                .size(width = 60.dp, height = 90.dp)
-                .padding(end = 16.dp))
+            } ?: Image(
+                modifier = Modifier
+                    .size(width = 60.dp, height = 90.dp)
+                    .padding(end = 16.dp),
+                painter = painterResource(com.avsoftware.quilterdemo.R.drawable.blank_book),
+                contentDescription = "No cover available"
+            )
 
             // Title and Author
             Column(
