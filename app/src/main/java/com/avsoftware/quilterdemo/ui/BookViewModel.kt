@@ -1,13 +1,11 @@
 package com.avsoftware.quilterdemo.ui
 
-import android.util.MutableBoolean
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.avsoftware.quilterdemo.domain.model.Book
-import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
+import com.avsoftware.domain.model.Book
+import com.avsoftware.domain.usecase.GetBooksUseCase
+import com.avsoftware.domain.usecase.impl.GetBooksUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow

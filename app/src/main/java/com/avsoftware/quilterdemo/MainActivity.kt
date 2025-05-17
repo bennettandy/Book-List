@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     BookScreen(
                         bookList = bookList,
                         modifier = Modifier.padding(innerPadding),
-                        bookClicked = { viewModel.showBottomSheet(it) }
+                        bookClicked = viewModel::showBottomSheet
                     )
 
                     // Bottom Sheet
