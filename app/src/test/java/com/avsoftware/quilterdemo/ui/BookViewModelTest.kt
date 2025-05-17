@@ -1,9 +1,9 @@
 package com.avsoftware.quilterdemo.ui
 
 import app.cash.turbine.test
-import com.avsoftware.quilterdemo.domain.model.Book
-import com.avsoftware.quilterdemo.domain.model.BookStatus
-import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
+import com.avsoftware.domain.model.Book
+import com.avsoftware.domain.model.BookStatus
+import com.avsoftware.domain.usecase.GetBooksUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
