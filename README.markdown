@@ -17,12 +17,12 @@ BookListDemo is an Android application that allows users to browse books from th
    - The app will fetch books from `https://openlibrary.org/` and display them.
 
 ## Architecture
-Using Android Modules:
+Using **Android Modules**:
 - **:app**: Main Application Module has dependencies on :app:data and :app:domain.
 - **:app:domain**: Domain Module, defines Model classes, Interfaces and Usecases that depend only on Domain objects.
 - **:app:data**: Data Module, implements the domain repository interface using the retrofit API client.
 
-QuilterDemo follows **MVVM** with **MVI-inspired** state management:
+QuilterDemo follows **MVVM**:
 - **Model**: `BookRepository` fetches data from `OpenLibraryApiService` (Retrofit).
 - **View**: Jetpack Compose UI (`BookScreen`, `BookItem`, `BottomSheetContent`) in `MainActivity`.
 - **ViewModel**: `BookViewModel` manages state (`booksList`, `showBottomSheet`, `selectedBook`) using `StateFlow`.
