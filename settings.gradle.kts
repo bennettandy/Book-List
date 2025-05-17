@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "QuilterDemo"
 include(":app")
- 
+include(":app:domain")
+include(":app:data")

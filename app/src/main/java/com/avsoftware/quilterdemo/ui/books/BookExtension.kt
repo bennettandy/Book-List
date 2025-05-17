@@ -1,6 +1,6 @@
 package com.avsoftware.quilterdemo.ui.books
 
-import com.avsoftware.quilterdemo.domain.model.Book
+import com.avsoftware.domain.model.Book
 
 // This is UI code so having it as an extension keeps the Domain model cleaner
 enum class CoverSize { SMALL, MEDIUM, LARGE }
