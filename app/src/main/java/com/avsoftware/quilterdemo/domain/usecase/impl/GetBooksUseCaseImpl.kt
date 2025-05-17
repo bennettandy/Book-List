@@ -1,4 +1,4 @@
-package com.avsoftware.quilterdemo.data.api
+package com.avsoftware.quilterdemo.domain.usecase.impl
 
 import com.avsoftware.quilterdemo.domain.model.Book
 import com.avsoftware.quilterdemo.domain.repository.BookRepository
@@ -7,7 +7,12 @@ import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
 
-class GetBooksUseCaseImpl @Inject constructor(private val bookRepository: BookRepository): GetBooksUseCase {
+/**
+ * Use Case Implementation can live in domain layer as it only has
+ * dependencies to Domain objects
+ */
+class GetBooksUseCaseImpl @Inject constructor(private val bookRepository: BookRepository):
+    GetBooksUseCase {
     override operator fun invoke(): Single<List<Book>> {
 
         // Zip the 3 endpoints into a Single List
@@ -27,13 +32,13 @@ class GetBooksUseCaseImpl @Inject constructor(private val bookRepository: BookRe
                 books.sortedBy { it.id }
             }
             .doOnSuccess {
-                Timber.d("Got ${it.size} Books")
+                Timber.Forest.d("Got ${it.size} Books")
             }
             .doOnSuccess {
-                Timber.d("Attempting to Load Books")
+                Timber.Forest.d("Attempting to Load Books")
             }
             .doOnError {
-                Timber.w("Failed to Load books ${it.message}")
+                Timber.Forest.w("Failed to Load books ${it.message}")
             }
     }
 }

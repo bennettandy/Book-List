@@ -1,7 +1,7 @@
 package com.avsoftware.quilterdemo.di
 
 import com.avsoftware.quilterdemo.data.OpenLibraryBookRepository
-import com.avsoftware.quilterdemo.data.api.GetBooksUseCaseImpl
+import com.avsoftware.quilterdemo.domain.usecase.impl.GetBooksUseCaseImpl
 import com.avsoftware.quilterdemo.domain.repository.BookRepository
 import com.avsoftware.quilterdemo.domain.usecase.GetBooksUseCase
 import dagger.Binds
