@@ -1,7 +1,9 @@
 package com.avsoftware.quilterdemo.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.avsoftware.domain.model.Book
+import com.avsoftware.domain.usecase.GetBooksFlowUseCase
 import com.avsoftware.domain.usecase.GetBooksUseCase
 import com.avsoftware.domain.usecase.impl.GetBooksUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,14 +11,17 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookViewModel @Inject constructor(
-    private val getBooksUseCase: GetBooksUseCase
+class BookViewModelFlow @Inject constructor(
+    private val getBooksUseCase: GetBooksFlowUseCase
 ) : ViewModel() {
 
     private val _booksList = MutableStateFlow<BookState>(BookState.Loading)
@@ -37,12 +42,16 @@ class BookViewModel @Inject constructor(
 
     fun loadBooks() {
         _booksList.value = BookState.Loading
-        _booksList.subscribeSingle(
-            single = getBooksUseCase(),
-            disposeBag = disposeBag,
-            onSuccess = { _, books -> BookState.Success(books.sortedBy { it.title }) },
-            onError = { _, throwable -> BookState.Error(throwable.message ?: "Failed to load books") }
-        )
+
+        viewModelScope.launch {
+            getBooksUseCase()
+                .catch { throwable ->
+                    _booksList.value = BookState.Error(throwable.message ?: "Failed to load books")
+                }
+                .collect { books ->
+                    _booksList.value = BookState.Success(books.sortedBy { it.title })
+                }
+        }
     }
 
     fun showBottomSheet(book: Book) {
@@ -55,34 +64,8 @@ class BookViewModel @Inject constructor(
         _showBottomSheet.value = false
     }
 
-    // This really simplifies state update, extension function on the MutableStateFlow
-    // this made more sense when I initially had 3 separate lists
-    // keeping as it is more concise
-    inline fun <T, S> MutableStateFlow<S>.subscribeSingle(
-        single: Single<T>,
-        disposeBag: CompositeDisposable,
-        crossinline onSuccess: (S, T) -> S,
-        crossinline onError: (S, Throwable) -> S
-    ) {
-        single.subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                // set the Success State
-                { result -> this.value = onSuccess(this.value, result) },
-                // set the Error State
-                { error -> this.value = onError(this.value, error) }
-            )
-            .also { disposeBag.add(it) }
-    }
-
     override fun onCleared() {
         disposeBag.clear()
         super.onCleared()
     }
-}
-
-sealed class BookState {
-    data object Loading : BookState()
-    data class Success(val books: List<Book>) : BookState()
-    data class Error(val message: String) : BookState()
 }

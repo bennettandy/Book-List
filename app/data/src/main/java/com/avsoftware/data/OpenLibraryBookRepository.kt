@@ -28,7 +28,6 @@ class OpenLibraryBookRepository @Inject constructor(
     override fun getAlreadyRead(): Single<List<Book>> {
         return openLibraryApiService.getAlreadyRead().map {
             it.reading_log_entries.map { it.toBook(BookStatus.AlreadyRead) }
-
         }
     }
 

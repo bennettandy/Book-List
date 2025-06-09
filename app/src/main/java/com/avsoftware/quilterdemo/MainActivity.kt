@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.avsoftware.quilterdemo.ui.BookState
 import com.avsoftware.quilterdemo.ui.books.BookScreen
-import com.avsoftware.quilterdemo.ui.BookViewModel
+import com.avsoftware.quilterdemo.ui.BookViewModelFlow
 import com.avsoftware.quilterdemo.ui.books.DetailsBottomSheet
 import com.avsoftware.quilterdemo.ui.theme.QuilterDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,19 +29,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: BookViewModel by viewModels()
+    //private val viewModel: BookViewModel by viewModels()
+    private val viewModel: BookViewModelFlow by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             QuilterDemoTheme {
 
                 val bookList = viewModel.booksList.collectAsState().value
-                val showBottomSheet = viewModel.showBottomSheet.collectAsState().value
                 val selectedBook = viewModel.selectedBook.collectAsState().value
-
+                val showBottomSheet = viewModel.showBottomSheet.collectAsState().value
                 val bottomSheetState = rememberModalBottomSheetState()
 
                 Scaffold(

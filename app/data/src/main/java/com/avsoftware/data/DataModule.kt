@@ -1,8 +1,12 @@
 package com.avsoftware.data
 
 import com.avsoftware.data.api.OpenLibraryApiService
+import com.avsoftware.data.api.OpenLibrarySimpleApiService
 import com.avsoftware.domain.repository.BookRepository
+import com.avsoftware.domain.repository.FlowBookRepository
+import com.avsoftware.domain.usecase.GetBooksFlowUseCase
 import com.avsoftware.domain.usecase.GetBooksUseCase
+import com.avsoftware.domain.usecase.impl.GetBooksUseCaseFlowImpl
 import com.avsoftware.domain.usecase.impl.GetBooksUseCaseImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,12 +33,24 @@ object DataModule {
         getBooksUseCaseImpl
 
     @Provides
+    fun provideGetBooksFlowUseCase(getBooksFlowUseCaseImpl: GetBooksUseCaseFlowImpl): GetBooksFlowUseCase =
+        getBooksFlowUseCaseImpl
+
+    @Provides
     fun provideBookRepository(bookRepository: OpenLibraryBookRepository): BookRepository =
+        bookRepository
+
+    @Provides
+    fun provideBookFlowRepository(bookRepository: OpenLibraryFlowBookRepository): FlowBookRepository =
         bookRepository
 
     @Provides
     fun provideGetBooksApiService(retrofit: Retrofit): OpenLibraryApiService =
         retrofit.create(OpenLibraryApiService::class.java)
+
+    @Provides
+    fun provideGetBooksFlowApiService(retrofit: Retrofit): OpenLibrarySimpleApiService =
+        retrofit.create(OpenLibrarySimpleApiService::class.java)
 
     @Provides
     fun provideGson(): Gson = GsonBuilder()
@@ -62,9 +78,9 @@ object DataModule {
     @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient) // Attach OkHttpClient with LoggingInterceptor
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
 }

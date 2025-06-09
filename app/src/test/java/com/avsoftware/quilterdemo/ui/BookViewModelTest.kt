@@ -7,6 +7,9 @@ import com.avsoftware.domain.usecase.GetBooksUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,15 +32,30 @@ class BookViewModelTest {
 
     @Before
     fun setUp() {
+        // Set coroutine dispatcher
         Dispatchers.setMain(testDispatcher)
-        // Mock useCase to avoid init block triggering real data fetch
+
+////        // Override All of the RxJava schedulers to use trampoline
+//        RxJavaPlugins.setInitIoSchedulerHandler { Schedulers.trampoline() }
+//        RxJavaPlugins.setInitComputationSchedulerHandler { Schedulers.trampoline() }
+//        RxJavaPlugins.setInitNewThreadSchedulerHandler { Schedulers.trampoline() }
+//        RxJavaPlugins.setInitSingleSchedulerHandler { Schedulers.trampoline() }
+//
+//        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+
+        // Mock useCase to return empty list
         every { useCase() } returns Single.just(emptyList())
+
+        // Initialize ViewModel
         viewModel = BookViewModel(useCase)
     }
 
     @After
     fun tearDown() {
+        // Reset coroutine dispatcher
         Dispatchers.resetMain()
+        // Reset RxJava schedulers
+        RxJavaPlugins.reset()
     }
 
     @Test

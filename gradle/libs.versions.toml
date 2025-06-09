@@ -8,17 +8,22 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+kotlinxCoroutinesReactive = "1.10.2"
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 composeBom = "2025.05.00"
 lifecycleViewmodelCompose = "2.9.0"
 loggingInterceptor = "4.12.0"
 navigationCompose = "2.9.0"
+retrofit2FlowCallAdapter = "1.0.0"
 timber = "5.0.1"
 
 mockk = "1.13.12"
 coroutinesTest = "1.8.1"
 turbine = "1.1.0"
+
+## A
+arrowCore = "2.1.0"
 
 ## C
 coil = "2.7.0"
@@ -62,8 +67,14 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+kotlinx-coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "kotlinxCoroutinesReactive" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+retrofit2-flow-call-adapter = { module = "com.github.MohammadSianaki:Retrofit2-Flow-Call-Adapter", version.ref = "retrofit2FlowCallAdapter" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+## A
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrowCore" }
+arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrowCore" }
 
 ## C
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }

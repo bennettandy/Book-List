@@ -52,6 +52,10 @@ dependencies {
     // inject annotation
     implementation(libs.javax.inject)
 
+    // arrow Monads
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.fx.coroutines)
+
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
